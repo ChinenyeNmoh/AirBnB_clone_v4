@@ -46,18 +46,15 @@ button:hover {
     width: 25%;
     border-right: 1px solid #DDDDDD;
 }
+
+.locations .popover h2 {
+    display: inline-block;
+}
+
 .amenities {
     height: 100%;
     width: 25%;
 }
-
-.amenities h4 {
-    height: 15px;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-}
-
 
 .popover {
     visibility: hidden;
@@ -109,3 +106,12 @@ button:hover {
 .locations:hover .popover {
     visibility: visible;
 }
+
+.amenities h4,
+.locations h4 {
+    height: 15px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
