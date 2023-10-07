@@ -1,15 +1,8 @@
 $(() => {
+  // retrieve places from api
+  getPlaces();
   // Initialize an empty array to store selected amenities
   let amenity_list = [];
-
-  // Function to update the displayed list of selected amenities
-  const updateAmenity = () => {
-    // Map the selected amenity objects to their names and join them with commas
-    const selectedAmenities = amenity_list.map((amenity) => amenity.name).join(', ');
-
-    // Set the text of the <h4> element within the '.amenities' element to the selected amenities
-    $('.amenities h4').text(selectedAmenities);
-  };
 
   // Event handler for changes in checkbox state
   $('.amenities input[type="checkbox"]').change((e) => {
@@ -42,19 +35,39 @@ $(() => {
     }
   });
 
-  // Make an AJAX POST request to retrieve data from the 'http://0.0.0.0:5001/api/v1/places_search/' endpoint
-  $.ajax({
-    url: 'http://0.0.0.0:5001/api/v1/places_search/',
-    type: 'POST',
-    data: JSON.stringify({}), // Send an empty JSON object as the request body
-    contentType: 'application/json', // Set the content type to JSON
-    success: (data) => { // Success callback function when the request is successful
-    // Loop through the retrieved data and create HTML elements for each place
-      data.forEach((place) => {
-        const article = $('<article>'); // Create a new <article> element
+  $('.filters button[type="button"]').click(() => {
+    list = amenity_list.map((amenity) => amenity.id);
+    getPlaces({ amenities: list });
+  });
 
-        // Populate the <article> element with place information using template literals
-        article.html(`
+  /** ******************************** auxillary functions *******************************************/
+
+  // Function to update the displayed list of selected amenities
+  function updateAmenity () {
+    // Map the selected amenity objects to their names and join them with commas
+    const selectedAmenities = amenity_list.map((amenity) => amenity.name).join(', ');
+
+    // Set the text of the <h4> element within the '.amenities' element to the selected amenities
+    $('.amenities h4').text(selectedAmenities);
+  }
+
+  // Function to Make an AJAX POST request to retrieve data from
+  // the 'http://0.0.0.0:5001/api/v1/places_search/' endpoint
+
+  function getPlaces (param = {}) {
+    $('section.places').empty();
+    $.ajax({
+      url: 'http://0.0.0.0:5001/api/v1/places_search/',
+      type: 'POST',
+      data: JSON.stringify(param), // Send an empty JSON object as the request body
+      contentType: 'application/json', // Set the content type to JSON
+      success: (data) => { // Success callback function when the request is successful
+        // Loop through the retrieved data and create HTML elements for each place
+        data.forEach((place) => {
+          const article = $('<article>'); // Create a new <article> element
+
+          // Populate the <article> element with place information using template literals
+          article.html(`
         <div class="title_box">
           <h2>${place.name}</h2>
           <div class="price_by_night">$${place.price_by_night}</div>
@@ -78,12 +91,13 @@ $(() => {
         </div>
       `);
 
-        // Append the created <article> element to the '.places' section
-        $('section.places').append(article);
-      });
-    },
-    error: (error) => { // Error callback function in case the request fails
-      console.error('Error occurred: ', error);
-    }
-  });
+          // Append the created <article> element to the '.places' section
+          $('section.places').append(article);
+        });
+      },
+      error: (error) => { // Error callback function in case the request fails
+        console.error('Error occurred: ', error);
+      }
+    });
+  }
 });
