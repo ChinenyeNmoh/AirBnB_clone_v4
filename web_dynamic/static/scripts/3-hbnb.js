@@ -42,41 +42,47 @@ $(() => {
     }
   });
 
+  // Make an AJAX POST request to retrieve data from the 'http://0.0.0.0:5001/api/v1/places_search/' endpoint
   $.ajax({
     url: 'http://0.0.0.0:5001/api/v1/places_search/',
     type: 'POST',
-    data: JSON.stringify({}),
-    contentType: 'application/json',
-    success: (data) => {
+    data: JSON.stringify({}), // Send an empty JSON object as the request body
+    contentType: 'application/json', // Set the content type to JSON
+    success: (data) => { // Success callback function when the request is successful
+    // Loop through the retrieved data and create HTML elements for each place
       data.forEach((place) => {
-        const article = $('<article>');
+        const article = $('<article>'); // Create a new <article> element
+
+        // Populate the <article> element with place information using template literals
         article.html(`
-	        <div class="title_box">
-	            <h2>${place.name}</h2>
-	            <div class="price_by_night">${place.price_by_night}</div>
-	        </div>
-	        <div class="information">
-	            <div class="max_guest">
-                    ${place.max_guest} Guest${place.max_guest !== 1 ? 's' : ''}
-                </div>
-                <div class="number_rooms">
-                    ${place.number_rooms} Bedroom${place.number_rooms !== 1 ? 's' : ''}
-                </div>
-                <div class="number_bathrooms">
-                    ${place.number_bathrooms} Bathroom${place.number_bathrooms !== 1 ? 's' : ''}
-                </div>
-	        </div>
-	        <div class="user">
-                <b>Owner:</b>
-            </div>
-            <div class="description">
-	            ${place.description}
-            </div>
-            `);
+        <div class="title_box">
+          <h2>${place.name}</h2>
+          <div class="price_by_night">$${place.price_by_night}</div>
+        </div>
+        <div class="information">
+          <div class="max_guest">
+            ${place.max_guest} Guest${place.max_guest !== 1 ? 's' : ''}
+          </div>
+          <div class="number_rooms">
+            ${place.number_rooms} Bedroom${place.number_rooms !== 1 ? 's' : ''}
+          </div>
+          <div class="number_bathrooms">
+            ${place.number_bathrooms} Bathroom${place.number_bathrooms !== 1 ? 's' : ''}
+          </div>
+        </div>
+        <div class="user">
+          <b>Owner:</b>
+        </div>
+        <div class="description">
+          ${place.description}
+        </div>
+      `);
+
+        // Append the created <article> element to the '.places' section
         $('section.places').append(article);
       });
     },
-    error: (error) => {
+    error: (error) => { // Error callback function in case the request fails
       console.error('Error occurred', error);
     }
   });
