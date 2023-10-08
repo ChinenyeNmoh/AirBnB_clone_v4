@@ -99,3 +99,50 @@
 .user {
   margin-bottom: 1.5%;
 }
+
+.reviews {
+	margin-top: 40px;
+	width: 100%;
+}
+
+.review_item {
+	margin-bottom: 10px;
+}
+
+.review_item h3 {
+    font-size: 14px;
+}
+
+.review_text {
+	margin: 0px;
+    font-size: 12px;
+}
+
+.reviews h2 {
+    font-size: 16px;
+    text-align: start;
+}
+
+.reviews ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.article_subtitle {
+	font-size: 16px;
+	text-align: left;
+	width: 100%;
+	border-bottom: 1px solid #DDDDDD;
+	padding: 0px;
+	margin: 0px;
+	padding-bottom: 10px;
+}
+
+.reviews .showHide {
+    font-weight: normal;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+    padding: 2px 5px;
+    margin-left: 5px;
+    cursor: pointer;
+}
